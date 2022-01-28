@@ -15,7 +15,7 @@ class GameEngine {
         // Entities to be added at the end of each update
         this.entitiesToAdd = [];
 
-        this.castLine = true;
+        this.castLine = false;
         this.hooked = false;
 
         // Information on the input
