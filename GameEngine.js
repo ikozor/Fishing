@@ -16,6 +16,7 @@ class GameEngine {
         this.entitiesToAdd = [];
 
         this.castLine = true;
+        this.hooked = false;
 
         // Information on the input
         this.click = null;
@@ -103,6 +104,7 @@ class GameEngine {
         // Add new things
         this.entities = this.entities.concat(this.entitiesToAdd);
         this.entitiesToAdd = [];
+        DEBUG = document.getElementById("debug").checked;
     };
 
     loop() {

@@ -1,4 +1,5 @@
 const gameEngine = new GameEngine();
+var DEBUG = false;
 
 const ASSET_MANAGER = new AssetManager();
 
