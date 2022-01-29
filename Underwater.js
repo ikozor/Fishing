@@ -3,6 +3,7 @@ var y_speed = 0.01;
 var depth = 0;
 var spawn = 800;
 var hookBB = null;
+var caught = [];
 
 
 class hook{
@@ -60,11 +61,14 @@ class UWTracker{
     constructor(game){
         this.game = game;
         this.stuff = [];
+        caught = [];
     }
 
     update(){
-        if(!this.game.castLine)
+        if(!this.game.castLine){
             this.stuff=[];
+            caught = [];
+        }
 
         if(spawn == 800)
             this.rand = Math.floor(Math.random()*Math.ceil(200))
@@ -80,30 +84,44 @@ class UWTracker{
                 this.stuff.splice(i,1);
             else{
                 this.stuff[i].update();
-                if(!this.game.hooked && this.stuff[i].BB.collide(hookBB))
+                if(!this.game.hooked && this.stuff[i].BB.collide(hookBB)){
                     this.game.hooked = true;
+                    caught.push(this.stuff[i]);
+                    this.stuff[i].hooked = true;
+                }
+                else if(this.stuff[i].BB.collide(hookBB)){
+                    if(this.stuff[i].fish && !this.stuff[i].hooked){
+                        caught.push(this.stuff[i]);
+                        this.stuff[i].hooked = true;
+                    }
+                }
+
             }
+        }
+        for(let i =0; i < caught.length; i++){
+            caught[i].x = hookBB.x;
+            caught[i].y = hookBB.y;
         }
     }
 
     // returns a random fish based on depth
     getRandomFish(){
         if(Math.floor(Math.random()*(depth/0.5)%20 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,true);
         if(Math.floor(Math.random()*(depth)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,true);
         else if(Math.floor(Math.random()*(depth/15)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24,true);
         else if(Math.floor(Math.random()*(depth/10)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11,true);
         else if(Math.floor(Math.random()*(depth/5)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22,true);
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12,true);
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12,true);
         else
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6);
+            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6,true);
     }
 
 
@@ -119,12 +137,13 @@ class UWTracker{
 }
 
 class Underwater {
-    constructor(game,x,moving,startDepth,picture,rpicture,width,height){
-        Object.assign(this,{game,x,startDepth,moving,picture,width,height});
+    constructor(game,x,moving,startDepth,picture,rpicture,width,height,fish){
+        Object.assign(this,{game,x,startDepth,moving,picture,width,height,fish});
         this.y = spawn;
         this.pic = ASSET_MANAGER.getAsset(picture);
         this.rev = ASSET_MANAGER.getAsset(rpicture);
         this.anim = [];
+        this.hooked = false;
         if(Math.random() >= 0.5){
             this.mult = 1;
             this.curr = "for";
