@@ -107,21 +107,21 @@ class UWTracker{
     // returns a random fish based on depth
     getRandomFish(){
         if(Math.floor(Math.random()*(depth/0.5)%20 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12);
         if(Math.floor(Math.random()*(depth)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12);
         else if(Math.floor(Math.random()*(depth/15)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24);
         else if(Math.floor(Math.random()*(depth/10)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11);
         else if(Math.floor(Math.random()*(depth/5)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22);
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12);
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,121);
         else
-            return new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6,true);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6);
     }
 
 
@@ -136,9 +136,16 @@ class UWTracker{
 
 }
 
-class Underwater {
-    constructor(game,x,moving,startDepth,picture,rpicture,width,height,fish){
-        Object.assign(this,{game,x,startDepth,moving,picture,width,height,fish});
+class Obstical{
+    constructor(game,startDepth,picture,width, height){
+        }
+
+
+}
+
+class Fish {
+    constructor(game,x,startDepth,picture,rpicture,width,height){
+        Object.assign(this,{game,x,startDepth,picture,width,height});
         this.y = spawn;
         this.pic = ASSET_MANAGER.getAsset(picture);
         this.rev = ASSET_MANAGER.getAsset(rpicture);
@@ -162,26 +169,24 @@ class Underwater {
     }
 
     update(){
-        if(this.moving){                // seperate the things that should swim in the x directions
-            if(this.x < 10) {
-                this.mult = 1;
-                this.curr = "for";
-                this.xBB = this.width*(this.width/16);
-            }
-            else if (this.x > 580) {
-                this.mult = -1;
-                this.curr = "rev";
-                this.xBB = 0;
-            }
-            this.x += this.mult * SPEED;
-            if(this.game.hooked){       // when a fish is caught, make hooked = true and start going back up to the surface
-                spawn = -100;
-                this.y += 5 * SPEED;
-            }
-            else {
-                spawn = 800;
-                this.y -= SPEED;
-            }
+        if(this.x < 10) {
+            this.mult = 1;
+            this.curr = "for";
+            this.xBB = this.width*(this.width/16);
+        }
+        else if (this.x > 580) {
+            this.mult = -1;
+            this.curr = "rev";
+            this.xBB = 0;
+        }
+        this.x += this.mult * SPEED;
+        if(this.game.hooked){       // when a fish is caught, make hooked = true and start going back up to the surface
+            spawn = -100;
+            this.y += 5 * SPEED;
+        }
+        else {
+            spawn = 800;
+            this.y -= SPEED;
         }
         this.BB.updateHor(this.x+this.xBB);
         this.BB.updateVer(this.y+ 5*this.height);
