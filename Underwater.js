@@ -77,7 +77,7 @@ class UWTracker{
 
         if(this.rand == 10 && this.game.castLine){            
             this.stuff.push(this.getRandomFish());
-            //this.stuff.push(new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22));
+            //this.stuff.push(new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12));
         }
         for(let i = 0; i < this.stuff.length; i++){
             if(this.stuff[i].y <= -110 || this.stuff[i] >= 810)
@@ -90,7 +90,7 @@ class UWTracker{
                     this.stuff[i].hooked = true;
                 }
                 else if(this.stuff[i].BB.collide(hookBB)){
-                    if(this.stuff[i].fish && !this.stuff[i].hooked){
+                    if(!this.stuff[i].hooked){
                         caught.push(this.stuff[i]);
                         this.stuff[i].hooked = true;
                     }
@@ -119,7 +119,7 @@ class UWTracker{
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12);
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,121);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12);
         else
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6);
     }
@@ -136,10 +136,35 @@ class UWTracker{
 
 }
 
+class Anchor extends Obstical{
+    constructor(game,startDepth,picture,width, height){
+        super(game,startDepth,picture,width, height);
+    }
+
+    update(){
+        super();
+        
+    }
+}
+
 class Obstical{
     constructor(game,startDepth,picture,width, height){
-        }
+        Object.assign(this, {game,startDepth,width,height});
+        this.pic = ASSET_MANAGER.getAsset(picture);
+        this.BB = new BouncingBox(this.x,this.y,this.width/1.25,this.height/1.25);
+    }
 
+    updateBB(){
+        this.BB.updateHor(this.x);
+        this.BB.updateVer(this.y);
+    }
+    update(){
+        updateBB();
+    }
+    
+    draw(ctx){
+        ctx.drawImage(this.pic,this.x,this.y,this.width,this.height);
+    }
 
 }
 
