@@ -11,7 +11,6 @@ class hook{
         this.game = game;
         this.x = 250;
         this.y= -500;
-        depth = 0;
         this.pic = ASSET_MANAGER.getAsset("./Assets/Objects/hook.png");
         this.BB = new BouncingBox(this.x+25,this.y+900,70,25);
         hookBB = this.BB;
@@ -37,6 +36,7 @@ class hook{
         else {
             depth = 0;
             this.game.hooked = false;
+            y_speed = 0.01;
         }
         this.BB.updateHor(this.x+25);
         this.BB.updateVer(this.y + 970);
@@ -68,17 +68,25 @@ class UWTracker{
         if(!this.game.castLine){
             this.stuff=[];
             caught = [];
+            
         }
+
+        this.obstiChance = this.game.hooked ? 10 : 11;
+
 
         if(spawn == 800)
-            this.rand = Math.floor(Math.random()*Math.ceil(200))
+            this.rand = Math.floor(Math.random()*Math.ceil(2000));
         else
-            this.rand = Math.floor(Math.random()*Math.ceil(40))
+            this.rand = Math.floor(Math.random()*Math.ceil(400));
 
-        if(this.rand == 10 && this.game.castLine){            
+        if(this.rand <= 7 && this.game.castLine){            
             this.stuff.push(this.getRandomFish());
-            //this.stuff.push(new Underwater(this.game,Math.floor(Math.random()*800),true,depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22));
+            //this.stuff.push();
         }
+        else if(this.rand >=10 && this.rand <= this.obstiChance && this.game.castLine){
+            this.stuff.push(this.getRandomObstical());
+        }
+
         for(let i = 0; i < this.stuff.length; i++){
             if(this.stuff[i].y <= -110 || this.stuff[i] >= 810)
                 this.stuff.splice(i,1);
@@ -89,11 +97,9 @@ class UWTracker{
                     caught.push(this.stuff[i]);
                     this.stuff[i].hooked = true;
                 }
-                else if(this.stuff[i].BB.collide(hookBB)){
-                    if(this.stuff[i].fish && !this.stuff[i].hooked){
-                        caught.push(this.stuff[i]);
-                        this.stuff[i].hooked = true;
-                    }
+                else if(this.stuff[i].BB.collide(hookBB) && !this.stuff[i].hooked){
+                    caught.push(this.stuff[i]);
+                    this.stuff[i].hooked = true;
                 }
 
             }
@@ -119,9 +125,17 @@ class UWTracker{
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12);
         else if(Math.floor(Math.random()*(depth/2)%15 >=10))
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,121);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12);
         else
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6);
+    }
+
+    getRandomObstical(){
+        if(Math.floor(Math.random()*10 <= 5))
+            return new Obstical(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Obsticals/Bomb.png",75,75, this.game.hooked ? -2 : -1) ;
+        else
+            return new Obstical(this.game,Math.floor(Math.random()*700),this.game.hooked ? 800 : -109,"./Assets/Obsticals/Anchor.png",75,192,3) ;
+                                   
     }
 
 
@@ -137,8 +151,31 @@ class UWTracker{
 }
 
 class Obstical{
-    constructor(game,startDepth,picture,width, height){
+    constructor(game,x,y,picture,width,height,dir){
+        Object.assign(this,{game,x,y,width,height,dir});
+        this.pic = ASSET_MANAGER.getAsset(picture);
+        this.initial = this.y;
+        
+        this.BB = new BouncingBox(this.x+(0.1*this.width),this.y+(0.1*this.height),0.8*this.width,0.8*this.height);
+        
+    }
+
+    update(){
+        this.game.hooked ? this.y -= this.dir * SPEED : this.y += this.dir * SPEED;
+        this.BB.updateHor(this.x+(0.1*this.width));
+        this.BB.updateVer(this.y+(0.1*this.height));
+        
+        this.hooked ? this.game.castLine = false : "";
+        
+    }
+
+    draw(ctx){
+        ctx.drawImage(this.pic,this.x,this.y,this.width,this.height);
+        if(DEBUG){
+            ctx.strokeStyle = "Red";
+            ctx.strokeRect(this.BB.x,this.BB.y,this.BB.width,this.BB.height);
         }
+    }
 
 
 }

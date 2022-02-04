@@ -30,6 +30,9 @@ ASSET_MANAGER.queueDownload("./Assets/Fish/6R.png");
 ASSET_MANAGER.queueDownload("./Assets/Fish/7R.png");
 ASSET_MANAGER.queueDownload("./Assets/Fish/8R.png");
 
+ASSET_MANAGER.queueDownload("./Assets/Obsticals/Bomb.png");
+ASSET_MANAGER.queueDownload("./Assets/Obsticals/Anchor.png");
+
 
 ASSET_MANAGER.downloadAll(() => {
 	const canvas = document.getElementById("gameWorld");
