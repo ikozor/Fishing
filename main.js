@@ -33,8 +33,14 @@ ASSET_MANAGER.queueDownload("./Assets/Fish/8R.png");
 ASSET_MANAGER.queueDownload("./Assets/Obsticals/Bomb.png");
 ASSET_MANAGER.queueDownload("./Assets/Obsticals/Anchor.png");
 
+ASSET_MANAGER.queueDownload("./Assets/Audio/bk_music.mp3");
+ASSET_MANAGER.queueDownload("./Assets/Audio/underwater.mp3");
+ASSET_MANAGER.queueDownload("./Assets/Audio/reel.mp3");
+
 
 ASSET_MANAGER.downloadAll(() => {
+	ASSET_MANAGER.autoRepeat("./Assets/Audio/bk_music.mp3");
+
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
 	ctx.imageSmoothingEnabled = false;

@@ -4,7 +4,6 @@ class EntityManager{
     }
 
     create(){
-
         this.game.addEntity(new hook(this.game));
         this.game.addEntity(new UWTracker(this.game));
         this.game.addEntity(new block(this.game,0,537));

@@ -1,4 +1,5 @@
 // This game shell was happily modified from Googler Seth Ladd's "Bad Aliens" game and his Google IO talk in 2011
+audioStarted = false;
 
 class GameEngine {
     constructor(options) {
@@ -105,7 +106,28 @@ class GameEngine {
         this.entities = this.entities.concat(this.entitiesToAdd);
         this.entitiesToAdd = [];
         DEBUG = document.getElementById("debug").checked;
+
+        var mute = document.getElementById("mute").checked;
+        var volume = document.getElementById("volume").value;
+        if(!audioStarted && !mute){
+            ASSET_MANAGER.playAsset("./Assets/Audio/bk_music.mp3");
+            audioStarted = true;
+        }
+
+        ASSET_MANAGER.muteAudio(mute);
+        ASSET_MANAGER.adjustVolume(volume);
+
+        this.playAudio("./Assets/Audio/reel.mp3", this.hooked);
+        this.playAudio("./Assets/Audio/underwater.mp3", this.castLine);
+
     };
+
+    playAudio(path, when){
+        if(when && ASSET_MANAGER.assetEnded(path)) 
+            ASSET_MANAGER.playAsset(path);
+        else if (!when)
+            ASSET_MANAGER.endAsset(path);
+    }
 
     loop() {
         
