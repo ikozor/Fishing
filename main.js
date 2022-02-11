@@ -46,8 +46,7 @@ ASSET_MANAGER.downloadAll(() => {
 	ctx.imageSmoothingEnabled = false;
 	gameEngine.init(ctx);
 	
-	em = new EntityManager(gameEngine);
-	em.create();
+	gameEngine.addEntity(new EntityManager(gameEngine));
 
 	gameEngine.start();
 });

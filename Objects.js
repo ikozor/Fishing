@@ -6,8 +6,7 @@ class building{
 
     update(){};
     draw(ctx){
-        if(!this.game.castLine)
-            ctx.drawImage(this.pic, this.x,this.y,200,200);
+        ctx.drawImage(this.pic, this.x,this.y,200,200);
     }
 }
 
@@ -20,8 +19,7 @@ class block{
     update(){};
 
     draw(ctx){
-        if(!this.game.castLine)
-            ctx.drawImage(this.pic, this.x,this.y,125,300);
+        ctx.drawImage(this.pic, this.x,this.y,125,300);
     }
 }
 
@@ -34,8 +32,7 @@ class water {
     update(){};
 
     draw(ctx){
-        if(!this.game.castLine)
-            ctx.drawImage(this.pic, 0,0,96,32,this.x,this.y,600,300);
+        ctx.drawImage(this.pic, 0,0,96,32,this.x,this.y,600,300);
     }
 }
 
@@ -48,8 +45,7 @@ class boat{
     update(){};
 
     draw(ctx){
-        if(!this.game.castLine)
-            ctx.drawImage(this.pic,this.x,this.y,100,50);
+        ctx.drawImage(this.pic,this.x,this.y,100,50);
 
     }
 }
@@ -65,8 +61,7 @@ class title{
     update(){};
 
     draw(ctx){
-        if(!this.game.castLine)
-            ctx.drawImage(this.pic, this.x,this.y, 400,300);
+        ctx.drawImage(this.pic, this.x,this.y, 400,300);
     }
     
 }
@@ -86,25 +81,21 @@ class boatFisher{
     }
 
     update(){
-        if(!this.game.castLine){
-
-            if(Math.floor(Math.random()*1000) == 10 && this.curr =="fish"){
-                this.curr = "hook";
-            }
-            else if(this.anim["hook"].isDone()){
-                this.curr = "cast";
-                this.anim["hook"].elapsedTime = 0;
-            }
-            else if(this.anim["cast"].isDone()){
-                this.curr = "fish";
-                this.anim["cast"].elapsedTime = 0;
-            }
+        if(Math.floor(Math.random()*1000) == 10 && this.curr =="fish"){
+            this.curr = "hook";
+        }
+        else if(this.anim["hook"].isDone()){
+            this.curr = "cast";
+            this.anim["hook"].elapsedTime = 0;
+        }
+        else if(this.anim["cast"].isDone()){
+            this.curr = "fish";
+            this.anim["cast"].elapsedTime = 0;
         }
     }
 
     draw(ctx){
-        if(!this.game.castLine)
-            this.anim[this.curr].drawFrame(this.game.clockTick,ctx,this.x,this.y,2);
+        this.anim[this.curr].drawFrame(this.game.clockTick,ctx,this.x,this.y,2);
     }
 }
 
@@ -123,7 +114,6 @@ class fisher{
     update(){}
 
     draw(ctx){
-        if(!this.game.castLine)
-            this.anim[this.curr].drawFrame(this.game.clockTick,ctx,this.x,this.y,2);
+        this.anim[this.curr].drawFrame(this.game.clockTick,ctx,this.x,this.y,2);
     }
 }

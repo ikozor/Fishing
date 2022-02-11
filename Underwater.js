@@ -4,6 +4,7 @@ var depth = 0;
 var spawn = 800;
 var hookBB = null;
 var caught = [];
+var stuff = [];
 
 
 class hook{
@@ -17,27 +18,16 @@ class hook{
     }
 
     update(){
-        if(this.game.castLine){
-            depth += y_speed;
-            if(this.game.mouse != null){
-                this.x = this.game.mouse.x - 62;
-                this.y = this.game.mouse.y-950;   
-            }
-            if(this.game.hooked){
-                y_speed = -0.05;
-                if(depth < 0){
-                    this.game.castLine = false;
-                    depth = 0;
-                    y_speed = 0.01;
-                }
+        depth += y_speed;
+        if(this.game.mouse != null){
+            this.x = this.game.mouse.x - 62;
+            this.y = this.game.mouse.y-950;   
+        }
+        if(this.game.hooked){
+            y_speed = -0.05;
 
-            }
         }
-        else {
-            depth = 0;
-            this.game.hooked = false;
-            y_speed = 0.01;
-        }
+    
         this.BB.updateHor(this.x+25);
         this.BB.updateVer(this.y + 970);
         hookBB = this.BB;
@@ -45,13 +35,11 @@ class hook{
 
     draw(ctx){
         ctx.font = "30px Arial";
-        if(this.game.castLine){
-            ctx.fillText("Depth: " + Math.round(depth) +" ft", 25, 30 );
-            ctx.drawImage(this.pic,this.x,this.y,125,1000);
-            if(DEBUG){
-                ctx.strokeStyle = "Red";
-                ctx.strokeRect(this.BB.x,this.BB.y,this.BB.width,this.BB.height)
-            }
+        ctx.fillText("Depth: " + Math.round(depth) +" ft", 25, 30 );
+        ctx.drawImage(this.pic,this.x,this.y,125,1000);
+        if(DEBUG){
+            ctx.strokeStyle = "Red";
+            ctx.strokeRect(this.BB.x,this.BB.y,this.BB.width,this.BB.height)
         }
 
     }
@@ -60,18 +48,18 @@ class hook{
 class UWTracker{
     constructor(game){
         this.game = game;
-        this.stuff = [];
+        stuff = [];
         caught = [];
     }
 
     update(){
         if(!this.game.castLine){
-            this.stuff=[];
+            stuff=[];
             caught = [];
             
         }
 
-        this.obstiChance = this.game.hooked ? 10 : 11;
+        this.obstiChance = this.game.hooked ? 13 : 14;
 
 
         if(spawn == 800)
@@ -79,27 +67,27 @@ class UWTracker{
         else
             this.rand = Math.floor(Math.random()*Math.ceil(400));
 
-        if(this.rand <= 7 && this.game.castLine){            
-            this.stuff.push(this.getRandomFish());
-            //this.stuff.push();
+        if(this.rand <= 12){            
+            stuff.push(this.getRandomFish());
+            //stuff.push();
         }
-        else if(this.rand >=10 && this.rand <= this.obstiChance && this.game.castLine){
-            this.stuff.push(this.getRandomObstical());
+        else if(this.rand >=13 && this.rand <= this.obstiChance){
+            stuff.push(this.getRandomObstical());
         }
 
-        for(let i = 0; i < this.stuff.length; i++){
-            if(this.stuff[i].y <= -110 || this.stuff[i] >= 810)
-                this.stuff.splice(i,1);
+        for(let i = 0; i < stuff.length; i++){
+            if(stuff[i].y <= -110 || stuff[i] >= 810)
+                stuff.splice(i,1);
             else{
-                this.stuff[i].update();
-                if(!this.game.hooked && this.stuff[i].BB.collide(hookBB)){
+                stuff[i].update();
+                if(!this.game.hooked && stuff[i].BB.collide(hookBB)){
                     this.game.hooked = true;
-                    caught.push(this.stuff[i]);
-                    this.stuff[i].hooked = true;
+                    caught.push(stuff[i]);
+                    stuff[i].hooked = true;
                 }
-                else if(this.stuff[i].BB.collide(hookBB) && !this.stuff[i].hooked){
-                    caught.push(this.stuff[i]);
-                    this.stuff[i].hooked = true;
+                else if(stuff[i].BB.collide(hookBB) && !stuff[i].hooked){
+                    caught.push(stuff[i]);
+                    stuff[i].hooked = true;
                 }
 
             }
@@ -141,11 +129,8 @@ class UWTracker{
 
 
     draw(ctx){
-        if(this.game.castLine){
-        for(let i = 0; i < this.stuff.length; i++)
-            this.stuff[i].draw(ctx);
-        }
-        
+        for(let i = 0; i < stuff.length; i++)
+            stuff[i].draw(ctx);   
     }
 
 }
