@@ -60,7 +60,7 @@ class UWTracker{
         }
 
         this.obstiChance = this.game.hooked ? 13 : 14;
-
+        this.backchance = this.game.hooked ? 25 : 50;
 
         if(spawn == 800)
             this.rand = Math.floor(Math.random()*Math.ceil(2000));
@@ -73,6 +73,9 @@ class UWTracker{
         }
         else if(this.rand >=13 && this.rand <= this.obstiChance){
             stuff.push(this.getRandomObstical());
+        }
+        else if(this.rand < this.backchance){
+            stuff.push(this.getRandomBackground());
         }
 
         for(let i = 0; i < stuff.length; i++){
@@ -100,30 +103,55 @@ class UWTracker{
 
     // returns a random fish based on depth
     getRandomFish(){
-        if(Math.floor(Math.random()*(depth/0.5)%20 >=10))
+        if(Math.random()*(depth/0.5)%20 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12);
-        if(Math.floor(Math.random()*(depth)%15 >=10))
+        else if(Math.random()*(depth)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12);
-        else if(Math.floor(Math.random()*(depth/15)%15 >=10))
+        else if(Math.random()*(depth/15)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24);
-        else if(Math.floor(Math.random()*(depth/10)%15 >=10))
+        else if(Math.random()*(depth/10)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11);
-        else if(Math.floor(Math.random()*(depth/5)%15 >=10))
+        else if(Math.random()*(depth/5)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22);
-        else if(Math.floor(Math.random()*(depth/2)%15 >=10))
+        else if(Math.random()*(depth/2)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12);
-        else if(Math.floor(Math.random()*(depth/2)%15 >=10))
+        else if(Math.random()*(depth/2)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12);
         else
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6);
     }
 
     getRandomObstical(){
-        if(Math.floor(Math.random()*10 <= 5))
-            return new Obstical(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Obsticals/Bomb.png",75,75, this.game.hooked ? -2 : -1) ;
+        if(Math.random()*10 <= 5)
+            return new Obstical(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Obsticals/Bomb.png",75,75, this.game.hooked ? -2 : -1);
         else
-            return new Obstical(this.game,Math.floor(Math.random()*700),this.game.hooked ? 800 : -109,"./Assets/Obsticals/Anchor.png",75,192,3) ;
+            return new Obstical(this.game,Math.floor(Math.random()*700),this.game.hooked ? 800 : -109,"./Assets/Obsticals/Anchor.png",75,192,3);
                                    
+    }
+
+    getRandomBackground(){
+        
+        if(Math.random()*100 <= 2)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Mast.png",200,200);
+        else if(Math.random()*100 <= 22)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Seaweed_1.png",200,200);
+        else if(Math.random()*100 <= 40)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Seaweed_2.png",200,200);
+        else if(Math.random()*100 <= 45)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Steering-wheel.png",200,200);
+        else if (Math.random()*100 <= 50)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_1.png",200,200);
+        else if (Math.random()*100 <= 60)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_2.png",200,200);
+        else if (Math.random()*100 <= 70)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_3.png",200,200);
+        else if (Math.random()*100 <= 80)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_4.png",200,200);
+        else if (Math.random()*100 <= 90)
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_5.png",200,200);
+        else
+            return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_6.png",200,200);
+        
     }
 
 
@@ -163,6 +191,25 @@ class Obstical{
     }
 
 
+}
+
+class Background {
+    constructor(game,x,y,picture,width,height){
+        Object.assign(this,{game,x,y,width,height});
+        this.pic = ASSET_MANAGER.getAsset(picture);
+        this.initial = this.y;
+        this.BB = new BouncingBox(-100,-100,0,0);
+        
+    }
+
+    update(){
+        this.game.hooked ? this.y += SPEED * 5 : this.y -= 2 *SPEED;
+        
+    }
+
+    draw(ctx){
+        ctx.drawImage(this.pic,this.x,this.y,this.width,this.height);
+    }
 }
 
 class Fish {

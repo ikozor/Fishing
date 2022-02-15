@@ -33,6 +33,17 @@ ASSET_MANAGER.queueDownload("./Assets/Fish/8R.png");
 ASSET_MANAGER.queueDownload("./Assets/Obsticals/Bomb.png");
 ASSET_MANAGER.queueDownload("./Assets/Obsticals/Anchor.png");
 
+ASSET_MANAGER.queueDownload("./Assets/Background/Mast.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Seaweed_1.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Seaweed_2.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Steering-wheel.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Stone_1.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Stone_2.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Stone_3.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Stone_4.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Stone_5.png");
+ASSET_MANAGER.queueDownload("./Assets/Background/Stone_6.png");
+
 ASSET_MANAGER.queueDownload("./Assets/Audio/bk_music.mp3");
 ASSET_MANAGER.queueDownload("./Assets/Audio/underwater.mp3");
 ASSET_MANAGER.queueDownload("./Assets/Audio/reel.mp3");
