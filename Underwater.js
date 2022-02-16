@@ -1,9 +1,9 @@
 const SPEED = 0.8;
 var y_speed = 0.01;
 var depth = 0;
+var max_depth = 0;
 var spawn = 800;
 var hookBB = null;
-var caught = [];
 var stuff = [];
 
 
@@ -26,6 +26,8 @@ class hook{
         if(this.game.hooked){
             y_speed = -0.05;
 
+        }else{
+            max_depth = depth;
         }
     
         this.BB.updateHor(this.x+25);
@@ -92,6 +94,7 @@ class UWTracker{
                     caught.push(stuff[i]);
                     stuff[i].hooked = true;
                 }
+                stuff.sort((a,b)=> b.pos - a.pos);
 
             }
         }
@@ -104,21 +107,21 @@ class UWTracker{
     // returns a random fish based on depth
     getRandomFish(){
         if(Math.random()*(depth/0.5)%20 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,2);
         else if(Math.random()*(depth)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,7);
         else if(Math.random()*(depth/15)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24,5);
         else if(Math.random()*(depth/10)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11,8);
         else if(Math.random()*(depth/5)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22,6);
         else if(Math.random()*(depth/2)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12,3);
         else if(Math.random()*(depth/2)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12,4);
         else
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6,1);
     }
 
     getRandomObstical(){
@@ -167,6 +170,7 @@ class Obstical{
     constructor(game,x,y,picture,width,height,dir){
         Object.assign(this,{game,x,y,width,height,dir});
         this.pic = ASSET_MANAGER.getAsset(picture);
+        this.pos = 1;
         this.initial = this.y;
         
         this.BB = new BouncingBox(this.x+(0.1*this.width),this.y+(0.1*this.height),0.8*this.width,0.8*this.height);
@@ -198,6 +202,7 @@ class Background {
         Object.assign(this,{game,x,y,width,height});
         this.pic = ASSET_MANAGER.getAsset(picture);
         this.initial = this.y;
+        this.pos = 3;
         this.BB = new BouncingBox(-100,-100,0,0);
         
     }
@@ -213,9 +218,10 @@ class Background {
 }
 
 class Fish {
-    constructor(game,x,startDepth,picture,rpicture,width,height){
-        Object.assign(this,{game,x,startDepth,picture,width,height});
+    constructor(game,x,startDepth,picture,rpicture,width,height,type){
+        Object.assign(this,{game,x,startDepth,picture,width,height,type});
         this.y = spawn;
+        this.pos = 2;
         this.pic = ASSET_MANAGER.getAsset(picture);
         this.rev = ASSET_MANAGER.getAsset(rpicture);
         this.anim = [];

@@ -1,23 +1,36 @@
+var caught = [];
+
+
 class EntityManager{
     constructor(game){
         this.game = game;
         this.states = [];
         this.currState = 'title';
 
-        this.states['title'] = [new title(this.game,100,-50),new boatFisher(this.game,435,470),
-            new boat(this.game,400,500),new building(this.game,50,400),new fisher(this.game,180,427),new water(this.game,0,520),new block(this.game,0,537)];
+        this.states['title'] = [new title(this.game,100,-50),new boatFisher(this.game,435,450),
+            new boat(this.game,400,500),new building(this.game,50,400),new fisher(this.game,180,407),new water(this.game,0,520),new block(this.game,0,537)];
 
-        this.states['underwater'] = [new hook(this.game),new UWTracker(this.game)];
+        this.states['underwater'] = [new UWTracker(this.game), new hook(this.game)];
+
+        this.states['result'] = [new BG_Board(50,50)];
 
     }
 
     update(){
-        if(this.game.castLine){
+        if(this.game.results){
+            if(this.game.castLine)  this.game.castLine = false;
+            if(this.game.hooked)  this.game.hooked = false;
+            this.currState = 'result';
+
+        }
+        else if(this.game.castLine){
             this.currState = 'underwater';
         }
         else {
             depth = 0;
+            max_depth = 0;
             this.game.hooked = false;
+            this.game.results = false;
             y_speed = 0.01;
             this.currState = "title";
             caught = [];
@@ -27,7 +40,7 @@ class EntityManager{
 
         }
         if(depth < 0)
-            this.game.castLine = false;
+            this.game.results = true;
         
 
 

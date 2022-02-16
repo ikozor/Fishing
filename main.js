@@ -13,6 +13,7 @@ ASSET_MANAGER.queueDownload("./Assets/Objects/Woodcutter_hook.png");
 ASSET_MANAGER.queueDownload("./Assets/Objects/Fisherman_hook.png");
 ASSET_MANAGER.queueDownload("./Assets/Objects/Fisherman_idle.png");
 ASSET_MANAGER.queueDownload("./Assets/Objects/hook.png");
+
 ASSET_MANAGER.queueDownload("./Assets/Fish/1.png");
 ASSET_MANAGER.queueDownload("./Assets/Fish/2.png");
 ASSET_MANAGER.queueDownload("./Assets/Fish/3.png");
@@ -43,6 +44,8 @@ ASSET_MANAGER.queueDownload("./Assets/Background/Stone_3.png");
 ASSET_MANAGER.queueDownload("./Assets/Background/Stone_4.png");
 ASSET_MANAGER.queueDownload("./Assets/Background/Stone_5.png");
 ASSET_MANAGER.queueDownload("./Assets/Background/Stone_6.png");
+
+ASSET_MANAGER.queueDownload("./Assets/Objects/CatchBG.png");
 
 ASSET_MANAGER.queueDownload("./Assets/Audio/bk_music.mp3");
 ASSET_MANAGER.queueDownload("./Assets/Audio/underwater.mp3");

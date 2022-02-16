@@ -18,6 +18,7 @@ class GameEngine {
 
         this.castLine = false;
         this.hooked = false;
+        this.results = false;
 
         // Information on the input
         this.click = null;
@@ -72,10 +73,12 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keydown", e => {
             switch(e.code) {
                 case "Enter":
-                    that.castLine = true;
+                    if(!this.castLine)
+                        that.castIt = true;
                     break;
                 case "Escape":
-                    that.castLine = false;
+                    if(that.results)
+                        that.results = false;
                     break;
             }
         });

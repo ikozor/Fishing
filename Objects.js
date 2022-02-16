@@ -74,9 +74,9 @@ class boatFisher{
 
         this.anim = []
         this.curr = "fish";
-        this.anim["fish"] = new Animator(this.pic1,0,10,48,38,4,0.5,0,false,true);
-        this.anim["hook"] = new Animator(this.pic2,0,10,48,38,6,0.2,0,false,false);
-        this.anim["cast"] = new Animator(this.pic2,0,10,48,38,6,0.2,0,true,false);
+        this.anim["fish"] = new Animator(this.pic1,0,0,48,48,4,0.5,0,false,true);
+        this.anim["hook"] = new Animator(this.pic2,0,0,48,48,6,0.2,0,false,false);
+        this.anim["cast"] = new Animator(this.pic2,0,0,48,48,6,0.2,0,true,false);
         
     }
 
@@ -107,11 +107,22 @@ class fisher{
 
         this.anim = []
         this.curr = "idle";
-        this.anim["cast"] = new Animator(this.pic2,0,10,48,38,6,0.2,0,true,false);
-        this.anim["idle"] = new Animator(this.pic3,0,10,48,38,4,0.5,0,false,true);
+        this.anim["cast"] = new Animator(this.pic2,0,0,48,48,6,0.2,0,true,false);
+        this.anim["idle"] = new Animator(this.pic3,0,0,48,48,4,0.5,0,false,true);
     }
 
-    update(){}
+    update(){
+        if (this.game.castIt){
+            this.curr = "cast";
+            if(this.anim[this.curr].isDone()){
+                this.game.castLine=true;
+                this.anim[this.curr].elapsedTime = 0;
+                this.game.castIt=false;
+            }
+        }
+        else 
+            this.curr = "idle";
+    }
 
     draw(ctx){
         this.anim[this.curr].drawFrame(this.game.clockTick,ctx,this.x,this.y,2);
