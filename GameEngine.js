@@ -73,7 +73,7 @@ class GameEngine {
         this.ctx.canvas.addEventListener("keydown", e => {
             switch(e.code) {
                 case "Enter":
-                    if(!this.castLine)
+                    if(!that.results && !that.castLine)
                         that.castIt = true;
                     break;
                 case "Escape":
@@ -116,6 +116,7 @@ class GameEngine {
             ASSET_MANAGER.playAsset("./Assets/Audio/bk_music.mp3");
             audioStarted = true;
         }
+        
 
         ASSET_MANAGER.muteAudio(mute);
         ASSET_MANAGER.adjustVolume(volume);

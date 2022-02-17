@@ -57,6 +57,8 @@ ASSET_MANAGER.downloadAll(() => {
 
 	const canvas = document.getElementById("gameWorld");
 	const ctx = canvas.getContext("2d");
+	ctx.lineWidth = 5;
+	ctx.font = "30px Bradley Hand, cursive";
 	ctx.imageSmoothingEnabled = false;
 	gameEngine.init(ctx);
 	

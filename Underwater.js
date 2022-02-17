@@ -36,7 +36,7 @@ class hook{
     }
 
     draw(ctx){
-        ctx.font = "30px Arial";
+        ctx.font = "30px Bradley Hand, cursive";
         ctx.fillText("Depth: " + Math.round(depth) +" ft", 25, 30 );
         ctx.drawImage(this.pic,this.x,this.y,125,1000);
         if(DEBUG){
@@ -50,30 +50,23 @@ class hook{
 class UWTracker{
     constructor(game){
         this.game = game;
-        stuff = [];
-        caught = [];
     }
 
     update(){
-        if(!this.game.castLine){
-            stuff=[];
-            caught = [];
-            
-        }
 
-        this.obstiChance = this.game.hooked ? 13 : 14;
-        this.backchance = this.game.hooked ? 25 : 50;
+        this.obstiChance = this.game.hooked ? 15 : 16;
+        this.backchance = this.game.hooked ? 27 : 52;
 
         if(spawn == 800)
             this.rand = Math.floor(Math.random()*Math.ceil(2000));
         else
             this.rand = Math.floor(Math.random()*Math.ceil(400));
 
-        if(this.rand <= 12){            
+        if(this.rand <= 14){            
             stuff.push(this.getRandomFish());
-            //stuff.push();
+            //stuff.push(new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/3R.png",16,12,3));
         }
-        else if(this.rand >=13 && this.rand <= this.obstiChance){
+        else if(this.rand >=15 && this.rand <= this.obstiChance){
             stuff.push(this.getRandomObstical());
         }
         else if(this.rand < this.backchance){
@@ -107,21 +100,21 @@ class UWTracker{
     // returns a random fish based on depth
     getRandomFish(){
         if(Math.random()*(depth/0.5)%20 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,2);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,1);
         else if(Math.random()*(depth)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,7);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,2);
         else if(Math.random()*(depth/15)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24,5);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24,7);
         else if(Math.random()*(depth/10)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11,8);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11,6);
         else if(Math.random()*(depth/5)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22,6);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22,5);
         else if(Math.random()*(depth/2)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12,3);
         else if(Math.random()*(depth/2)%15 >=10)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12,4);
         else
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6,1);
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6,0);
     }
 
     getRandomObstical(){
