@@ -1,10 +1,11 @@
-const SPEED = 0.8;
+var SPEED = 0.8;
 var y_speed = 0.01;
 var depth = 0;
 var max_depth = 0;
 var spawn = 800;
 var hookBB = null;
 var stuff = [];
+var slow = 1;
 
 
 class hook{
@@ -18,18 +19,23 @@ class hook{
     }
 
     update(){
+        if(this.game.clockTick > 0.010){
+            y_speed = this.game.hooked ? -5 * this.game.clockTick : this.game.clockTick;
+            SPEED =  120 * this.game.clockTick;
+            slow = 2
+        }else {
+            SPEED = 0.8;
+            y_speed = this.game.hooked ? -0.05 :0.01;
+            slow = 1
+        }
         depth += y_speed;
         if(this.game.mouse != null){
             this.x = this.game.mouse.x - 62;
             this.y = this.game.mouse.y-950;   
         }
-        if(this.game.hooked){
-            y_speed = -0.05;
-
-        }else{
+        if(!this.game.hooked)
             max_depth = depth;
-        }
-    
+
         this.BB.updateHor(this.x+25);
         this.BB.updateVer(this.y + 970);
         hookBB = this.BB;
@@ -58,9 +64,9 @@ class UWTracker{
         this.backchance = this.game.hooked ? 27 : 52;
 
         if(spawn == 800)
-            this.rand = Math.floor(Math.random()*Math.ceil(2000));
+            this.rand = Math.floor(Math.random()*Math.ceil(2000/slow));
         else
-            this.rand = Math.floor(Math.random()*Math.ceil(400));
+            this.rand = Math.floor(Math.random()*Math.ceil(400/slow));
 
         if(this.rand <= 14){            
             stuff.push(this.getRandomFish());
