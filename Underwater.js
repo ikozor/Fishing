@@ -105,20 +105,21 @@ class UWTracker{
 
     // returns a random fish based on depth
     getRandomFish(){
-        if(Math.random()*(depth/0.5)%20 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,1);
-        else if(Math.random()*(depth)%15 >=10)
-            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,2);
-        else if(Math.random()*(depth/15)%15 >=10)
+    let rand = Math.random()*100;
+        if(rand < 5 && depth > 150)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/5.png","./Assets/Fish/5R.png",28,24,7);
-        else if(Math.random()*(depth/10)%15 >=10)
+        else if(rand < 10 && depth > 100)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/8.png","./Assets/Fish/8R.png",30,11,6);
-        else if(Math.random()*(depth/5)%15 >=10)
+        else if(rand < 15 && depth > 75)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/6.png","./Assets/Fish/6R.png",54,22,5);
-        else if(Math.random()*(depth/2)%15 >=10)
+        else if(rand < 30 && depth > 50)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/3.png","./Assets/Fish/3R.png",20,12,3);
-        else if(Math.random()*(depth/2)%15 >=10)
+        else if(rand < 45 && depth > 30)
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/4.png","./Assets/Fish/4R.png",26,12,4);
+        else if(rand < 60 && depth > 20)
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/7.png","./Assets/Fish/7R.png",30,12,2);
+        else if(rand < 75 && depth > 10)
+            return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/2.png","./Assets/Fish/2R.png",16,12,1);
         else
             return new Fish(this.game,Math.floor(Math.random()*800),depth,"./Assets/Fish/1.png","./Assets/Fish/1R.png",12,6,0);
     }
@@ -132,24 +133,24 @@ class UWTracker{
     }
 
     getRandomBackground(){
-        
-        if(Math.random()*100 <= 2)
+        let rand = Math.random()*100 
+        if(rand <= 2)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Mast.png",200,200);
-        else if(Math.random()*100 <= 22)
+        else if(rand <= 22)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Seaweed_1.png",200,200);
-        else if(Math.random()*100 <= 40)
+        else if(rand <= 40)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Seaweed_2.png",200,200);
-        else if(Math.random()*100 <= 45)
+        else if(rand <= 45)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Steering-wheel.png",200,200);
-        else if (Math.random()*100 <= 50)
+        else if (rand <= 50)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_1.png",200,200);
-        else if (Math.random()*100 <= 60)
+        else if (rand <= 60)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_2.png",200,200);
-        else if (Math.random()*100 <= 70)
+        else if (rand <= 70)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_3.png",200,200);
-        else if (Math.random()*100 <= 80)
+        else if (rand <= 80)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_4.png",200,200);
-        else if (Math.random()*100 <= 90)
+        else if (rand <= 90)
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_5.png",200,200);
         else
             return new Background(this.game,Math.floor(Math.random()*700),this.game.hooked ? -100 : 800,"./Assets/Background/Stone_6.png",200,200);
