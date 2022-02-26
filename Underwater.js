@@ -75,7 +75,7 @@ class UWTracker{
         else if(this.rand >=15 && this.rand <= this.obstiChance){
             stuff.push(this.getRandomObstical());
         }
-        else if(!document.getElementById("performance").checked && this.rand < this.backchance){
+        else if(this.rand < this.backchance){
             stuff.push(this.getRandomBackground());
         }
 
