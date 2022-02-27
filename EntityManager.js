@@ -1,11 +1,12 @@
 var caught = [];
+var currState = 'title';
+var hitOb = false;
 
 
 class EntityManager{
     constructor(game){
         this.game = game;
         this.states = [];
-        this.currState = 'title';
 
         this.states['title'] = [new title(this.game,100,-50),new boatFisher(this.game,435,450),
             new boat(this.game,400,500),new building(this.game,50,400),new fisher(this.game,180,407),new water(this.game,0,520),new block(this.game,0,537)];
@@ -21,11 +22,11 @@ class EntityManager{
         if(this.game.results){
             if(this.game.castLine)  this.game.castLine = false;
             if(this.game.hooked)  this.game.hooked = false;
-            this.currState = 'result';
+            currState = 'result';
 
         }
         else if(this.game.castLine){
-            this.currState = 'underwater';
+            currState = 'underwater';
         }
         else {
             fishies = [
@@ -43,7 +44,8 @@ class EntityManager{
             this.game.hooked = false;
             this.game.results = false;
             y_speed = 0.01;
-            this.currState = "title";
+            currState = "title";
+            hitOb = false;
             caught = [];
             stuff = [];
             totalMoney = 0;
@@ -56,15 +58,15 @@ class EntityManager{
         
 
 
-        for(let i = 0; i < this.states[this.currState].length; i ++){
-            this.states[this.currState][i].update();
+        for(let i = 0; i < this.states[currState].length; i ++){
+            this.states[currState][i].update();
         }
 
     }
 
     draw(ctx){
-        for(let i = 0; i < this.states[this.currState].length; i++){
-            this.states[this.currState][i].draw(ctx);
+        for(let i = 0; i < this.states[currState].length; i++){
+            this.states[currState][i].draw(ctx);
         }
     }
 }

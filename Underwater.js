@@ -182,7 +182,11 @@ class Obstical{
         this.BB.updateHor(this.x+(0.1*this.width));
         this.BB.updateVer(this.y+(0.1*this.height));
         
-        this.hooked ? this.game.castLine = false : "";
+        if(this.hooked) {
+            caught = [];
+            depth = 0;
+            hitOb = true;
+        }
         
     }
 

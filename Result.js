@@ -45,7 +45,12 @@ class displayManager{
         }
 
         ctx.font = "25px Bradley Hand, cursive";
-        ctx.fillText(" Depth: "+ Math.round(max_depth) + "ft  Total earned: $" + totalMoney, 65, 560);
+        if(hitOb){
+            ctx.fillText("You pull up your line to see the hook", 65, 560);
+            ctx.fillText("is missing", 65, 590);
+        }
+        else
+            ctx.fillText(" Depth: "+ Math.round(max_depth) + "ft  Total earned: $" + totalMoney, 65, 560);
         ctx.fillText(" Press the ESC key to go to title screen", 65, 620);
         
     }
